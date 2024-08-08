@@ -9,7 +9,11 @@ import SettingsView from './views/SettingsView';
 import AccountManagement from './AccountManagement';
 import StorePurchase from './StorePurchase';
 
-function Dashboard({ onLogout }) {
+interface Props {
+  onLogout: () => void;
+}
+
+function Dashboard({ onLogout }: Props) {
   const [activeTab, setActiveTab] = useState('home');
   const navigate = useNavigate();
 
@@ -23,7 +27,7 @@ function Dashboard({ onLogout }) {
     { icon: <Settings />, label: 'Settings', key: 'settings' },
   ];
 
-  const handleTabChange = (key) => {
+  const handleTabChange = (key: string) => {
     setActiveTab(key);
     navigate(key);
   };

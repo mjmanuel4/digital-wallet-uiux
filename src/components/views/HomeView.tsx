@@ -5,7 +5,8 @@ function HomeView() {
   const [balance, setBalance] = useState(5000);
 
   const handleSendMoney = () => {
-    const amount = parseFloat(prompt("Enter amount to send:"));
+    const response: null | string = prompt("Enter amount to send:");
+    const amount: number | null = (response !== null) ? parseFloat(response): null; // TODO: handling of null value
     if (amount && amount > 0 && amount <= balance) {
       setBalance(prevBalance => prevBalance - amount);
       alert(`$${amount} sent successfully!`);
@@ -15,7 +16,8 @@ function HomeView() {
   };
 
   const handleRequestMoney = () => {
-    const amount = parseFloat(prompt("Enter amount to request:"));
+    const response: null | string = prompt("Enter amount to send:");
+    const amount: number | null = (response !== null) ? parseFloat(response): null;
     if (amount && amount > 0) {
       alert(`Request for $${amount} sent successfully!`);
     } else {
@@ -24,7 +26,8 @@ function HomeView() {
   };
 
   const handleAddFunds = () => {
-    const amount = parseFloat(prompt("Enter amount to add:"));
+    const response: null | string = prompt("Enter amount to send:");
+    const amount: number | null = (response !== null) ? parseFloat(response): null;
     if (amount && amount > 0) {
       setBalance(prevBalance => prevBalance + amount);
       alert(`$${amount} added successfully!`);

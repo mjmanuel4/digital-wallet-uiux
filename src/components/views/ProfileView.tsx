@@ -20,7 +20,7 @@ function ProfileView() {
     alert('Profile updated successfully!');
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
     setProfile((prevProfile) => ({ ...prevProfile, [name]: value }));
   };

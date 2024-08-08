@@ -8,7 +8,7 @@ function NotificationsView() {
     { id: 3, type: 'card', message: 'Your new credit card has been shipped', time: '3 days ago' },
   ]);
 
-  const getIcon = (type) => {
+  const getIcon = (type: string) => {
     switch (type) {
       case 'alert':
         return <Bell className="text-yellow-500" />;
