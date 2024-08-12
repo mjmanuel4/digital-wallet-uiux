@@ -1,8 +1,20 @@
 import React, { useState } from 'react';
 import { Bell, Globe, Shield } from 'lucide-react';
 
+interface Settings {
+  notifications: {
+    email: boolean,
+    push: boolean,
+    sms: boolean
+  },
+  language: string,
+  twoFactor: boolean
+}
+
+type NotificationType = 'email' | 'push' | 'sms';
+
 function SettingsView() {
-  const [settings, setSettings] = useState({
+  const [settings, setSettings] = useState<Settings>({
     notifications: {
       email: true,
       push: false,
@@ -12,7 +24,8 @@ function SettingsView() {
     twoFactor: false,
   });
 
-  const handleNotificationChange = (type) => {
+  const handleNotificationChange = (typeString: string) => {
+    const type: NotificationType = typeString as NotificationType;
     setSettings((prevSettings) => ({
       ...prevSettings,
       notifications: {
@@ -22,7 +35,7 @@ function SettingsView() {
     }));
   };
 
-  const handleLanguageChange = (e) => {
+  const handleLanguageChange = (e: any) => {
     setSettings((prevSettings) => ({
       ...prevSettings,
       language: e.target.value,

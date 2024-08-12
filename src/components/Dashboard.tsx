@@ -9,8 +9,12 @@ import SettingsView from './views/SettingsView';
 import AccountManagement from './AccountManagement';
 import StorePurchase from './StorePurchase';
 
-function Dashboard({ onLogout }) {
-  const [activeTab, setActiveTab] = useState('home');
+interface Props {
+  onLogout: () => void;
+}
+
+function Dashboard({ onLogout }: Props) {
+  const [activeTab, setActiveTab] = useState<string>('home');
   const navigate = useNavigate();
 
   const sidebarLinks = [
@@ -23,7 +27,7 @@ function Dashboard({ onLogout }) {
     { icon: <Settings />, label: 'Settings', key: 'settings' },
   ];
 
-  const handleTabChange = (key) => {
+  const handleTabChange = (key: string) => {
     setActiveTab(key);
     navigate(key);
   };

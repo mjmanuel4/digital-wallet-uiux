@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import { PlusCircle } from 'lucide-react';
 
+interface Account {
+  id: number,
+  name: string,
+  balance: number,
+  number: string
+}
+
 function AccountsView() {
-  const [accounts, setAccounts] = useState([
+  const [accounts, setAccounts] = useState<Account[]>([
     { id: 1, name: 'Checking Account', balance: 2500, number: '****1234' },
     { id: 2, name: 'Savings Account', balance: 10000, number: '****5678' },
   ]);

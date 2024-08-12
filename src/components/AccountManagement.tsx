@@ -1,17 +1,37 @@
 import React, { useState } from 'react';
 import { PlusCircle, CreditCard, Building, Trash2 } from 'lucide-react';
 
+interface Account {
+  id: number,
+  type: string,
+  name: string,
+  balance: number
+}
+
+interface LinkedBank {
+  id: number,
+  name: string,
+  accountNumber: string
+}
+
+interface PaymentMethod {
+  id: number,
+  type: string,
+  last4: string, 
+  expiryDate: string
+}
+
 const AccountManagement = () => {
-  const [accounts, setAccounts] = useState([
+  const [accounts, setAccounts] = useState<Account[]>([
     { id: 1, type: 'Checking', name: 'Main Checking', balance: 5000 },
     { id: 2, type: 'Savings', name: 'Emergency Fund', balance: 10000 },
   ]);
 
-  const [linkedBanks, setLinkedBanks] = useState([
+  const [linkedBanks, setLinkedBanks] = useState<LinkedBank[]>([
     { id: 1, name: 'Bank of America', accountNumber: '****1234' },
   ]);
 
-  const [paymentMethods, setPaymentMethods] = useState([
+  const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([
     { id: 1, type: 'Credit Card', last4: '5678', expiryDate: '12/24' },
   ]);
 
@@ -23,7 +43,7 @@ const AccountManagement = () => {
   const [newCardExpiry, setNewCardExpiry] = useState('');
   const [newCardCVV, setNewCardCVV] = useState('');
 
-  const handleAddAccount = (e) => {
+  const handleAddAccount = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newAccountName) {
       setAccounts([...accounts, {
@@ -37,7 +57,7 @@ const AccountManagement = () => {
     }
   };
 
-  const handleLinkBank = (e) => {
+  const handleLinkBank = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newBankName && newBankAccountNumber) {
       setLinkedBanks([...linkedBanks, {
@@ -50,7 +70,7 @@ const AccountManagement = () => {
     }
   };
 
-  const handleAddPaymentMethod = (e) => {
+  const handleAddPaymentMethod = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newCardNumber && newCardExpiry && newCardCVV) {
       setPaymentMethods([...paymentMethods, {
@@ -65,15 +85,15 @@ const AccountManagement = () => {
     }
   };
 
-  const handleRemoveAccount = (id) => {
+  const handleRemoveAccount = (id: number) => {
     setAccounts(accounts.filter(account => account.id !== id));
   };
 
-  const handleRemoveBank = (id) => {
+  const handleRemoveBank = (id: number) => {
     setLinkedBanks(linkedBanks.filter(bank => bank.id !== id));
   };
 
-  const handleRemovePaymentMethod = (id) => {
+  const handleRemovePaymentMethod = (id: number) => {
     setPaymentMethods(paymentMethods.filter(method => method.id !== id));
   };
 

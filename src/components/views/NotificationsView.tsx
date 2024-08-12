@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import { Bell, DollarSign, CreditCard } from 'lucide-react';
 
+interface Notification {
+  id: number,
+  type: string,
+  message: string,
+  time: string
+}
+
 function NotificationsView() {
-  const [notifications, setNotifications] = useState([
+  const [notifications, setNotifications] = useState<Notification[]>([
     { id: 1, type: 'alert', message: 'Low balance in your checking account', time: '2 hours ago' },
     { id: 2, type: 'transaction', message: 'You received $500 from John Doe', time: '1 day ago' },
     { id: 3, type: 'card', message: 'Your new credit card has been shipped', time: '3 days ago' },
   ]);
 
-  const getIcon = (type) => {
+  const getIcon = (type: string) => {
     switch (type) {
       case 'alert':
         return <Bell className="text-yellow-500" />;
