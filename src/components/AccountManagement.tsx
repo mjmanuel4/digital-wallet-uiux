@@ -1,17 +1,37 @@
 import React, { useState } from 'react';
 import { PlusCircle, CreditCard, Building, Trash2 } from 'lucide-react';
 
+interface Account {
+  id: number,
+  type: string,
+  name: string,
+  balance: number
+}
+
+interface LinkedBank {
+  id: number,
+  name: string,
+  accountNumber: string
+}
+
+interface PaymentMethod {
+  id: number,
+  type: string,
+  last4: string, 
+  expiryDate: string
+}
+
 const AccountManagement = () => {
-  const [accounts, setAccounts] = useState([
+  const [accounts, setAccounts] = useState<Account[]>([
     { id: 1, type: 'Checking', name: 'Main Checking', balance: 5000 },
     { id: 2, type: 'Savings', name: 'Emergency Fund', balance: 10000 },
   ]);
 
-  const [linkedBanks, setLinkedBanks] = useState([
+  const [linkedBanks, setLinkedBanks] = useState<LinkedBank[]>([
     { id: 1, name: 'Bank of America', accountNumber: '****1234' },
   ]);
 
-  const [paymentMethods, setPaymentMethods] = useState([
+  const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([
     { id: 1, type: 'Credit Card', last4: '5678', expiryDate: '12/24' },
   ]);
 

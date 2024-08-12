@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import { Search } from 'lucide-react';
 
+interface Transaction {
+  id: number,
+  date: string,
+  description: string,
+  amount: number
+}
+
 function TransactionsView() {
-  const [transactions, setTransactions] = useState([
+  const [transactions, setTransactions] = useState<Transaction[]>([
     { id: 1, date: '2023-07-01', description: 'Grocery Store', amount: -75.50 },
     { id: 2, date: '2023-07-02', description: 'Salary Deposit', amount: 3000 },
     { id: 3, date: '2023-07-03', description: 'Electric Bill', amount: -120 },

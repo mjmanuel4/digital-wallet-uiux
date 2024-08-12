@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { User, Mail, Phone, Lock } from 'lucide-react';
 
+interface Profile {
+  name: string,
+  email: string,
+  phone: string
+}
+
 function ProfileView() {
-  const [profile, setProfile] = useState({
+  const [profile, setProfile] = useState<Profile>({
     name: 'John Doe',
     email: 'john.doe@example.com',
     phone: '+1 (555) 123-4567',

@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { CreditCard, QrCode, X } from 'lucide-react';
 
-
-
 type ScanningMode = 'store' | 'item';
 
 interface Store {

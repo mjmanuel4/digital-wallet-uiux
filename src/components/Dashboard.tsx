@@ -14,7 +14,7 @@ interface Props {
 }
 
 function Dashboard({ onLogout }: Props) {
-  const [activeTab, setActiveTab] = useState('home');
+  const [activeTab, setActiveTab] = useState<string>('home');
   const navigate = useNavigate();
 
   const sidebarLinks = [
