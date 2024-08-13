@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
-interface Props {
-  onLogin: () => void;
-}
-
-function Register({ onLogin }: Props) {
+function Register() {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Here you would typically make an API call to register the user
+    login(email, password);
     console.log('Registration attempt:', name, email, password);
-    onLogin(); // Automatically log in the user after successful registration
     navigate('/dashboard'); // Navigate to dashboard after successful registration
   };
 

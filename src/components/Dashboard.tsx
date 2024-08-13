@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Home, CreditCard, DollarSign, Bell, User, Settings, LogOut, ShoppingBag } from 'lucide-react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import HomeView from './views/HomeView';
 import TransactionsView from './views/TransactionsView';
 import NotificationsView from './views/NotificationsView';
@@ -9,13 +10,10 @@ import SettingsView from './views/SettingsView';
 import AccountManagement from './AccountManagement';
 import StorePurchase from './StorePurchase';
 
-interface Props {
-  onLogout: () => void;
-}
-
-function Dashboard({ onLogout }: Props) {
+function Dashboard() {
   const [activeTab, setActiveTab] = useState<string>('home');
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const sidebarLinks = [
     { icon: <Home />, label: 'Home', key: 'home' },
@@ -31,6 +29,11 @@ function Dashboard({ onLogout }: Props) {
     setActiveTab(key);
     navigate(key);
   };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  }
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -54,7 +57,7 @@ function Dashboard({ onLogout }: Props) {
           ))}
         </nav>
         <div className="absolute bottom-0 w-64 p-4">
-          <button className="flex items-center text-gray-600 hover:text-red-500" onClick={onLogout}>
+          <button className="flex items-center text-gray-600 hover:text-red-500" onClick={handleLogout}>
             <LogOut className="mr-2" size={18} />
             Logout
           </button>

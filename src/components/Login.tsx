@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
 import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
-interface Props {
-  onLogin: () => void;
-}
-
-function Login({ onLogin }: Props) {
+function Login() {
+  const { login } = useAuth();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const navigate: NavigateFunction = useNavigate();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Here you would typically make an API call to verify credentials
+    login(email, password);
     console.log('Login attempt:', email, password);
-    onLogin(); // Call the onLogin function passed from App.js
     navigate('/dashboard'); // Navigate to dashboard after successful login
   };
 
