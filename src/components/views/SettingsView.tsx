@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Bell, Globe, Shield, SunMoon, Sun, Moon } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Bell, Globe, Shield, SunMoon} from 'lucide-react';
 
 interface Settings {
   notifications: {
@@ -23,9 +23,9 @@ function SettingsView() {
     },
     language: 'en',
     twoFactor: false,
-    dark: false //default mode
+    dark: (localStorage.getItem('theme') === 'dark') ? true : false
   });
-
+  
   const handleNotificationChange = (typeString: string) => {
     const type: NotificationType = typeString as NotificationType;
     setSettings((prevSettings) => ({
@@ -56,21 +56,34 @@ function SettingsView() {
       ...prevSettings,
       dark: !prevSettings.dark,
     }))
+    updateTheme();
+  }
+
+  const updateTheme = () => {
+    if (!settings.dark) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+      console.log('Theme:', localStorage.getItem('theme'));
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+      console.log('Theme:', localStorage.getItem('theme'));
+    }
   }
 
   return (
     <div className="space-y-6">
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+      <div className="bg-white dark:bg-slate-800 shadow overflow-hidden sm:rounded-lg">
         <div className="px-4 py-5 sm:px-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900 flex items-center">
+          <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white flex items-center">
             <Bell className="mr-2" size={20} /> Notification Settings
           </h3>
         </div>
-        <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
-          <dl className="sm:divide-y sm:divide-gray-200">
+        <div className="border-t border-gray-200 dark:border-slate-700 px-4 py-5 sm:p-0">
+          <dl className="sm:divide-y sm:divide-gray-200 dark:sm:divide-slate-700">
             {Object.entries(settings.notifications).map(([key, value]) => (
               <div key={key} className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500 capitalize">{key} Notifications</dt>
+                <dt className="text-sm font-medium text-gray-500 dark:text-zinc-300 capitalize">{key} Notifications</dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                   <button
                     onClick={() => handleNotificationChange(key)}
@@ -90,15 +103,15 @@ function SettingsView() {
           </dl>
         </div>
         </div>
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+      <div className="bg-white dark:bg-slate-800 shadow overflow-hidden sm:rounded-lg">
         <div className="px-4 py-5 sm:px-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900 flex items-center">
+          <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white flex items-center">
             <Globe className="mr-2" size={20} /> Language Settings
           </h3>
         </div>
-        <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
+        <div className="border-t border-gray-200 dark:border-slate-700 px-4 py-5 sm:p-0">
           <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt className="text-sm font-medium text-gray-500">Language</dt>
+            <dt className="text-sm font-medium text-gray-500 dark:text-zinc-300">Language</dt>
             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
               <select
                 value={settings.language}
@@ -113,15 +126,15 @@ function SettingsView() {
           </div>
         </div>
       </div>
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+      <div className="bg-white dark:bg-slate-800 shadow overflow-hidden sm:rounded-lg">
         <div className="px-4 py-5 sm:px-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900 flex items-center">
+          <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white flex items-center">
             <Shield className="mr-2" size={20} /> Security Settings
           </h3>
         </div>
-        <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
+        <div className="border-t border-gray-200 dark:border-slate-700 px-4 py-5 sm:p-0">
           <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt className="text-sm font-medium text-gray-500">Two-Factor Authentication</dt>
+            <dt className="text-sm font-medium text-gray-500 dark:text-zinc-300">Two-Factor Authentication</dt>
             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
               <button
                 onClick={handleTwoFactorChange}
@@ -139,16 +152,16 @@ function SettingsView() {
           </div>
         </div>
       </div>
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+      <div className="bg-white dark:bg-slate-800 shadow overflow-hidden sm:rounded-lg">
         <div className="px-4 py-5 sm:px-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900 flex items-center">
+          <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white flex items-center">
             <SunMoon className="mr-2" size={20} /> Theme
           </h3>
         </div>
-        <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
+        <div className="border-t border-gray-200 dark:border-slate-700 px-4 py-5 sm:p-0">
           <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt className="text-sm font-medium text-gray-500">Dark Mode</dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            <dt className="text-sm font-medium text-gray-500 dark:text-zinc-300">Dark Mode</dt>
+            <dd className="mt-1 text-sm text-gray-900 dark:text-slate-400 sm:mt-0 sm:col-span-2">
               <button
                 onClick={handleThemeChange}
                 className={`${

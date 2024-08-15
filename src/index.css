@@ -15,3 +15,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@layer base {
+  .bg-light-background {
+    @apply bg-white;
+  }
+  .bg-dark-background {
+    @apply bg-gray-900;
+  }
+  .text-light-text {
+    @apply text-gray-900;
+  }
+  .text-dark-text {
+    @apply text-white;
+  }
+}

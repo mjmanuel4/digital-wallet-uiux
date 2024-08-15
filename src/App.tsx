@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -7,6 +7,11 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import { AuthProvider } from './contexts/AuthContext'
 
 function App() {
+  useEffect(() => {
+    if (localStorage.getItem('theme') === 'dark')
+      document.documentElement.classList.add('dark');
+  }, [])
+
   return (
     <AuthProvider>
       <Router>

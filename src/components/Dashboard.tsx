@@ -24,7 +24,7 @@ function Dashboard() {
     { icon: <User />, label: 'Profile', key: 'profile' },
     { icon: <Settings />, label: 'Settings', key: 'settings' },
   ];
-
+  
   const handleTabChange = (key: string) => {
     setActiveTab(key);
     navigate(key);
@@ -36,9 +36,9 @@ function Dashboard() {
   }
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 dark:bg-slate-900">
       {/* Sidebar */}
-      <div className="w-64 bg-white shadow-md">
+      <div className="w-64 bg-white dark:bg-slate-800 shadow-md dark:shadow-dark">
         <div className="p-4">
           <h1 className="text-2xl font-bold text-blue-600">DigiWallet</h1>
         </div>
@@ -47,7 +47,7 @@ function Dashboard() {
             <button
               key={link.key}
               className={`flex items-center w-full py-2 px-4 ${
-                activeTab === link.key ? 'bg-blue-100 text-blue-600' : 'text-gray-600 hover:bg-gray-100'
+                activeTab === link.key ? 'bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-gray-100' : 'text-gray-600 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-900'
               }`}
               onClick={() => handleTabChange(link.key)}
             >
@@ -57,7 +57,7 @@ function Dashboard() {
           ))}
         </nav>
         <div className="absolute bottom-0 w-64 p-4">
-          <button className="flex items-center text-gray-600 hover:text-red-500" onClick={handleLogout}>
+          <button className="flex items-center text-gray-600 dark: text-gray-100 hover:text-red-500" onClick={handleLogout}>
             <LogOut className="mr-2" size={18} />
             Logout
           </button>
@@ -66,9 +66,9 @@ function Dashboard() {
 
       {/* Main Content */}
       <div className="flex-1 overflow-y-auto">
-        <header className="bg-white shadow-sm">
+        <header className="bg-white dark:bg-slate-800 shadow-sm dark:shadow-dark">
           <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-            <h1 className="text-2xl font-semibold text-gray-900">{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}</h1>
+            <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}</h1>
           </div>
         </header>
         <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
