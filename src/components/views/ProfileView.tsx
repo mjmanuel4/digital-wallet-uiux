@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { User, Mail, Phone, Lock } from 'lucide-react';
 
+interface Profile {
+  name: string,
+  email: string,
+  phone: string
+}
+
 function ProfileView() {
-  const [profile, setProfile] = useState({
+  const [profile, setProfile] = useState<Profile>({
     name: 'John Doe',
     email: 'john.doe@example.com',
     phone: '+1 (555) 123-4567',
@@ -20,23 +26,24 @@ function ProfileView() {
     alert('Profile updated successfully!');
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
     setProfile((prevProfile) => ({ ...prevProfile, [name]: value }));
   };
 
   return (
-    <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div className="space-y-6 px-6 sm:px-0">
+    <div className="bg-white dark:bg-slate-800 shadow overflow-hidden rounded-lg">
       <div className="px-4 py-5 sm:px-6">
-        <h3 className="text-lg leading-6 font-medium text-gray-900">User Profile</h3>
+        <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">User Profile</h3>
       </div>
-      <div className="border-t border-gray-200">
+      <div className="border-t border-gray-200 dark:border-slate-700">
         <dl>
-          <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt className="text-sm font-medium text-gray-500 flex items-center">
+          <div className="bg-gray-50 dark:bg-slate-800 px-4 py-5 grid grid-cols-3 sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt className="text-sm font-medium text-gray-500 dark:text-zinc-400 flex items-center">
               <User className="mr-2" size={18} /> Full name
             </dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            <dd className="my-auto ml-2 text-sm text-gray-900 dark:text-white my-auto col-span-2">
               {isEditing ? (
                 <input
                   type="text"
@@ -50,11 +57,11 @@ function ProfileView() {
               )}
             </dd>
           </div>
-          <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt className="text-sm font-medium text-gray-500 flex items-center">
+          <div className="bg-white dark:bg-slate-800 px-4 py-5 grid grid-cols-3 sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt className="text-sm font-medium text-gray-500 dark:text-zinc-400 flex items-center">
               <Mail className="mr-2" size={18} /> Email address
             </dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            <dd className="my-auto ml-2 text-sm text-gray-900 dark:text-white my-auto col-span-2">
               {isEditing ? (
                 <input
                   type="email"
@@ -68,11 +75,11 @@ function ProfileView() {
               )}
             </dd>
           </div>
-          <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt className="text-sm font-medium text-gray-500 flex items-center">
+          <div className="bg-gray-50 dark:bg-slate-800 px-4 py-5 grid grid-cols-3 sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt className="text-sm font-medium text-gray-500 dark:text-zinc-400 flex items-center">
               <Phone className="mr-2" size={18} /> Phone number
             </dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            <dd className="my-auto ml-2 text-sm text-gray-900 dark:text-white my-auto col-span-2">
               {isEditing ? (
                 <input
                   type="tel"
@@ -88,7 +95,7 @@ function ProfileView() {
           </div>
         </dl>
       </div>
-      <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+      <div className="px-4 py-3 bg-gray-50 dark:bg-slate-800 text-right sm:px-6">
         {isEditing ? (
           <button
             onClick={handleSave}
@@ -105,6 +112,7 @@ function ProfileView() {
           </button>
         )}
       </div>
+    </div>
     </div>
   );
 }

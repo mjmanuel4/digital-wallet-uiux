@@ -1,27 +1,46 @@
 import React, { useState } from 'react';
 import { CreditCard, QrCode, X } from 'lucide-react';
 
+type ScanningMode = 'store' | 'item';
+
+interface Store {
+  id: number,
+  name: string,
+  distance: string
+}
+
+interface Item {
+  id: number,
+  name: string,
+  price: number
+}
+
+interface Props {
+  onScan: (qrCode: string) => void;
+}
+
 const StorePurchase = () => {
-  const [scanningMode, setScanningMode] = useState(null); // 'store' or 'item'
-  const [selectedStore, setSelectedStore] = useState(null);
-  const [cart, setCart] = useState([]);
-  const [total, setTotal] = useState(0);
+  const [scanningMode, setScanningMode] = useState<ScanningMode | null>(null); // 'store' or 'item'
+  const [selectedStore, setSelectedStore] = useState<Store | null>(null);
+  const [cart, setCart] = useState<Item[]>([]);
+  const [total, setTotal] = useState<number>(0);
 
   // Simulated database of QR codes
-  const qrCodes = {
+  const qrCodes: Record<string, Store | Item> = {
     store123: { id: 1, name: 'Grocery Store', distance: '0.5 miles' },
     store456: { id: 2, name: 'Electronics Shop', distance: '1.2 miles' },
     item789: { id: 1, name: 'Milk', price: 3.99 },
     itemABC: { id: 2, name: 'Bread', price: 2.49 },
   };
 
-  const startScanning = (mode) => {
+  const startScanning = (modeString: string) => {
+    const mode: ScanningMode = modeString as ScanningMode;
     setScanningMode(mode);
   };
 
-  const handleScan = (qrCode) => {
+  const handleScan = (qrCode: string) => {
     if (scanningMode === 'store') {
-      const store = qrCodes[qrCode];
+      const store: Store = qrCodes[qrCode] as Store;
       if (store) {
         setSelectedStore(store);
         setScanningMode(null);
@@ -29,7 +48,7 @@ const StorePurchase = () => {
         alert('Invalid store QR code');
       }
     } else if (scanningMode === 'item') {
-      const item = qrCodes[qrCode];
+      const item: Item = qrCodes[qrCode] as Item;
       if (item) {
         addToCart(item);
         setScanningMode(null);
@@ -39,12 +58,12 @@ const StorePurchase = () => {
     }
   };
 
-  const addToCart = (item) => {
+  const addToCart = (item: Item) => {
     setCart([...cart, item]);
     setTotal(total + item.price);
   };
 
-  const removeFromCart = (item) => {
+  const removeFromCart = (item: Item) => {
     const newCart = cart.filter(i => i.id !== item.id);
     setCart(newCart);
     setTotal(total - item.price);
@@ -60,17 +79,18 @@ const StorePurchase = () => {
   };
 
   // Simulated QR code scanner
-  const QRScanner = ({ onScan }) => (
+  const QRScanner = ({ onScan }: Props) => (
     <div className="bg-gray-200 p-4 rounded-lg text-center">
       <p className="mb-2">Scanning QR Code...</p>
       <input 
         type="text" 
         placeholder="Enter QR code" 
         className="p-2 border rounded"
-        onKeyPress={(e) => {
+        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
           if (e.key === 'Enter') {
-            onScan(e.target.value);
-            e.target.value = '';
+            const target = e.target as HTMLInputElement;
+            onScan(target.value);
+            target.value = '';
           }
         }}
       />
@@ -81,13 +101,13 @@ const StorePurchase = () => {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 px-6 sm:px-0">
       {!selectedStore ? (
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div className="bg-white dark:bg-slate-800 shadow overflow-hidden rounded-lg">
           <div className="px-4 py-5 sm:px-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Select a Store</h3>
+            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Select a Store</h3>
           </div>
-          <div className="border-t border-gray-200 px-4 py-5 sm:p-6">
+          <div className="border-t border-gray-200 dark:border-slate-700 px-4 py-5 sm:p-6">
             {scanningMode === 'store' ? (
               <QRScanner onScan={handleScan} />
             ) : (
