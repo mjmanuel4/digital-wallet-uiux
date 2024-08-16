@@ -98,22 +98,22 @@ const AccountManagement = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div className="space-y-6 px-6 sm:px-0">
+      <div className="bg-white dark:bg-slate-800 shadow overflow-hidden rounded-lg">
         <div className="px-4 py-5 sm:px-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">Your Accounts</h3>
+          <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Your Accounts</h3>
         </div>
-        <div className="border-t border-gray-200">
-          <ul className="divide-y divide-gray-200">
+        <div className="border-t border-gray-200 dark:border-slate-700">
+          <ul className="divide-y divide-gray-200 dark:divide-slate-700">
             {accounts.map(account => (
               <li key={account.id} className="px-4 py-4 sm:px-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-indigo-600 truncate">{account.name}</p>
+                    <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400 truncate">{account.name}</p>
                     <p className="text-sm text-gray-500">{account.type}</p>
                   </div>
                   <div className="flex items-center">
-                    <p className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                    <p className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 dark:bg-green-800 text-green-850 dark:text-green-100">
                       ${account.balance.toFixed(2)}
                     </p>
                     <button onClick={() => handleRemoveAccount(account.id)} className="ml-2 text-red-600 hover:text-red-900">
@@ -132,12 +132,12 @@ const AccountManagement = () => {
               value={newAccountName}
               onChange={(e) => setNewAccountName(e.target.value)}
               placeholder="Account Name"
-              className="flex-grow shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+              className="flex-grow shadow-sm dark:shadow-lg focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 dark:bg-slate-800 rounded-md"
             />
             <select
               value={newAccountType}
               onChange={(e) => setNewAccountType(e.target.value)}
-              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+              className="shadow-sm dark:shadow-lg focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 dark:bg-slate-800 dark:text-gray-400 rounded-md"
             >
               <option value="Checking">Checking</option>
               <option value="Savings">Savings</option>
@@ -150,17 +150,17 @@ const AccountManagement = () => {
         </div>
       </div>
 
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+      <div className="bg-white dark:bg-slate-800 shadow overflow-hidden rounded-lg">
         <div className="px-4 py-5 sm:px-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">Linked Bank Accounts</h3>
+          <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Linked Bank Accounts</h3>
         </div>
-        <div className="border-t border-gray-200">
-          <ul className="divide-y divide-gray-200">
+        <div className="border-t border-gray-200 dark:border-slate-700">
+          <ul className="divide-y divide-gray-200 dark:divide-slate-700">
             {linkedBanks.map(bank => (
               <li key={bank.id} className="px-4 py-4 sm:px-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-indigo-600 truncate">{bank.name}</p>
+                    <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400 truncate">{bank.name}</p>
                     <p className="text-sm text-gray-500">Account: {bank.accountNumber}</p>
                   </div>
                   <button onClick={() => handleRemoveBank(bank.id)} className="text-red-600 hover:text-red-900">
@@ -178,14 +178,14 @@ const AccountManagement = () => {
               value={newBankName}
               onChange={(e) => setNewBankName(e.target.value)}
               placeholder="Bank Name"
-              className="flex-grow shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+              className="flex-grow shadow-sm dark:shadow-lg focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 dark:bg-slate-800 rounded-md"
             />
             <input
               type="text"
               value={newBankAccountNumber}
               onChange={(e) => setNewBankAccountNumber(e.target.value)}
               placeholder="Account Number"
-              className="flex-grow shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+              className="flex-grow shadow-sm dark:shadow-lg focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 dark:bg-slate-800 rounded-md"
             />
             <button type="submit" className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
               <Building size={18} className="mr-2" />
@@ -195,17 +195,17 @@ const AccountManagement = () => {
         </div>
       </div>
 
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+      <div className="bg-white dark:bg-slate-800 shadow overflow-hidden rounded-lg">
         <div className="px-4 py-5 sm:px-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">Payment Methods</h3>
+          <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Payment Methods</h3>
         </div>
-        <div className="border-t border-gray-200">
-          <ul className="divide-y divide-gray-200">
+        <div className="border-t border-gray-200 dark:border-slate-700">
+          <ul className="divide-y divide-gray-200 dark:divide-slate-700">
             {paymentMethods.map(method => (
               <li key={method.id} className="px-4 py-4 sm:px-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-indigo-600 truncate">{method.type} ending in {method.last4}</p>
+                    <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400 truncate">{method.type} ending in {method.last4}</p>
                     <p className="text-sm text-gray-500">Expires: {method.expiryDate}</p>
                   </div>
                   <button onClick={() => handleRemovePaymentMethod(method.id)} className="text-red-600 hover:text-red-900">
@@ -223,7 +223,7 @@ const AccountManagement = () => {
               value={newCardNumber}
               onChange={(e) => setNewCardNumber(e.target.value)}
               placeholder="Card Number"
-              className="w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+              className="w-full shadow-sm dark:shadow-lg focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 dark:bg-slate-800 rounded-md"
             />
             <div className="flex space-x-2">
               <input
@@ -231,14 +231,14 @@ const AccountManagement = () => {
                 value={newCardExpiry}
                 onChange={(e) => setNewCardExpiry(e.target.value)}
                 placeholder="MM/YY"
-                className="flex-grow shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+                className="flex-grow shadow-sm dark:shadow-lg focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 dark:bg-slate-800 rounded-md"
               />
               <input
                 type="text"
                 value={newCardCVV}
                 onChange={(e) => setNewCardCVV(e.target.value)}
                 placeholder="CVV"
-                className="flex-grow shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+                className="flex-grow shadow-sm dark:shadow-lg focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 dark:bg-slate-800 rounded-md"
               />
             </div>
             <button type="submit" className="w-full inline-flex items-center justify-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

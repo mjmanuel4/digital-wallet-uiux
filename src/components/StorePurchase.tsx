@@ -101,13 +101,13 @@ const StorePurchase = () => {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 px-6 sm:px-0">
       {!selectedStore ? (
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div className="bg-white dark:bg-slate-800 shadow overflow-hidden rounded-lg">
           <div className="px-4 py-5 sm:px-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Select a Store</h3>
+            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Select a Store</h3>
           </div>
-          <div className="border-t border-gray-200 px-4 py-5 sm:p-6">
+          <div className="border-t border-gray-200 dark:border-slate-700 px-4 py-5 sm:p-6">
             {scanningMode === 'store' ? (
               <QRScanner onScan={handleScan} />
             ) : (

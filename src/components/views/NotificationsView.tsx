@@ -29,15 +29,15 @@ function NotificationsView() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 px-6 sm:px-0">
       {notifications.map((notification) => (
-        <div key={notification.id} className="bg-white shadow overflow-hidden sm:rounded-lg p-4 flex items-start">
+        <div key={notification.id} className="bg-white dark:bg-slate-800 shadow overflow-hidden rounded-lg p-4 flex items-start">
           <div className="flex-shrink-0 mr-4">
             {getIcon(notification.type)}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900">{notification.message}</p>
-            <p className="text-sm text-gray-500">{notification.time}</p>
+            <p className="text-sm font-medium text-gray-900 dark:text-white">{notification.message}</p>
+            <p className="text-sm text-gray-500 dark:text-zinc-300">{notification.time}</p>
           </div>
         </div>
       ))}
