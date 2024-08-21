@@ -10,8 +10,8 @@ function Login() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login(email, password);
     console.log('Login attempt:', email, password);
+    login(email, password);
     navigate('/dashboard'); // Navigate to dashboard after successful login
   };
 
