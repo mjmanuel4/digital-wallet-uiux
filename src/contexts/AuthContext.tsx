@@ -1,6 +1,13 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-interface ProtectedData {
+interface RegistrationData {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+}
+
+interface Credentials {
   email: string;
   password: string;
 }
@@ -18,6 +25,7 @@ interface AuthContextType {
   isAuthenticated: boolean | null;
   loading: boolean | null;
   user: User | null;
+  register: (email: string, paswword: string, firstName: string, lastName: string) => void;
   login: (email: string, password: string) => void;
   logout: () => void;
 }
@@ -37,16 +45,48 @@ export const AuthProvider: ({ children }: AuthProviderProps) => React.ReactEleme
   console.log('[Auth Provider Startup] token: ', token);
   console.log('[Auth Provider Startup] authenticated: ', isAuthenticated);
 
+  const register = (email: string, password: string, firstName: string, lastName: string) => {
+    const data: RegistrationData = {email, password, firstName, lastName};
+    console.log(email);
+    registerFetch(data)
+      .then((message: string) => {
+        alert(message);
+      })
+  }
+
+  const registerFetch: (data: RegistrationData) => Promise<string> = async (data: RegistrationData) => {
+    try {
+      const response = await fetch('http://localhost:3000/api/auth/register', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+
+      const result = await response.json();
+
+      if(response.statusText !== 'created') {
+        console.log(result.error);
+      } else {
+        console.log(result.message);
+      }
+
+      return result.message;
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   const login = (email: string, password: string) => {
-    const credentials: ProtectedData = {email, password};
+    const credentials: Credentials = {email, password};
     loginFetch(credentials)
       .then((result: boolean) => {
         setIsAuthenticated(result);
       })
   };
 
-  const loginFetch: (credentials: ProtectedData) => Promise<boolean> = async (credentials: ProtectedData) => {
+  const loginFetch: (credentials: Credentials) => Promise<boolean> = async (credentials: Credentials) => {
     let value: boolean = false;
     setLoading(true);
 
@@ -84,7 +124,7 @@ export const AuthProvider: ({ children }: AuthProviderProps) => React.ReactEleme
   };
 
   return (
-    <AuthContext.Provider value={{ token, isAuthenticated, loading, user , login, logout}}>
+    <AuthContext.Provider value={{ token, isAuthenticated, loading, user , register, login, logout}}>
       {children}
     </AuthContext.Provider>
   );

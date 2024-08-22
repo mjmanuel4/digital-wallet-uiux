@@ -3,18 +3,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 function Register() {
-  const [name, setName] = useState<string>('');
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { register } = useAuth();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Here you would typically make an API call to register the user
-    login(email, password);
-    console.log('Registration attempt:', name, email, password);
-    navigate('/dashboard'); // Navigate to dashboard after successful registration
+    console.log('Registration attempt:', firstName, lastName, email, password);
+    register(email, password, firstName, lastName);
+    navigate('/login');
   };
 
   return (
@@ -23,12 +23,23 @@ function Register() {
         <h2 className="text-2xl font-bold mb-4 dark:text-white">Register for DigiWallet</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-zinc-400">Name</label>
+            <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 dark:text-zinc-400">First Name</label>
             <input
               type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              id="firstName"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+              className="mt-1 block w-full border border-gray-300 dark:border-slate-500 dark:bg-slate-600 rounded-md shadow-sm p-2 dark:text-gray-200"
+            />
+          </div>
+          <div>
+            <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 dark:text-zinc-400">Last Name</label>
+            <input
+              type="text"
+              id="lastName"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
               required
               className="mt-1 block w-full border border-gray-300 dark:border-slate-500 dark:bg-slate-600 rounded-md shadow-sm p-2 dark:text-gray-200"
             />
