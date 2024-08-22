@@ -120,7 +120,7 @@ function SettingsView() {
               <select
                 value={settings.language}
                 onChange={handleLanguageChange}
-                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 dark:bg-slate-800 dark:shadow-lg dark:text-zinc-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm rounded-md"
+                className="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 dark:bg-slate-800 dark:shadow-lg dark:text-zinc-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm rounded-md"
               >
                 <option value="en">English</option>
                 <option value="es">Español</option>

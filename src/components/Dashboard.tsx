@@ -69,7 +69,7 @@ function Dashboard() {
             ))}
           </nav>
           <div className="absolute bottom-0 w-64 p-4">
-            <button className="flex items-center text-gray-600 dark: text-gray-100 hover:text-red-500" onClick={handleLogout}>
+            <button className="flex items-center text-gray-600 dark:text-gray-100 hover:text-red-500" onClick={handleLogout}>
               <LogOut className="mr-2" size={18} />
               Logout
             </button>

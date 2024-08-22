@@ -30,7 +30,7 @@ function Register() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="mt-1 block w-full border border-gray-300 border-gray-300 dark:border-slate-500 dark:bg-slate-600 rounded-md shadow-sm p-2 dark:text-gray-200"
+              className="mt-1 block w-full border border-gray-300 dark:border-slate-500 dark:bg-slate-600 rounded-md shadow-sm p-2 dark:text-gray-200"
             />
           </div>
           <div>
@@ -41,7 +41,7 @@ function Register() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="mt-1 block w-full border border-gray-300 border-gray-300 dark:border-slate-500 dark:bg-slate-600 rounded-md shadow-sm p-2 dark:text-gray-200"
+              className="mt-1 block w-full border border-gray-300 dark:border-slate-500 dark:bg-slate-600 rounded-md shadow-sm p-2 dark:text-gray-200"
             />
           </div>
           <div>
@@ -52,7 +52,7 @@ function Register() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="mt-1 block w-full border border-gray-300 border-gray-300 dark:border-slate-500 dark:bg-slate-600 rounded-md shadow-sm p-2 dark:text-gray-200"
+              className="mt-1 block w-full border border-gray-300 dark:border-slate-500 dark:bg-slate-600 rounded-md shadow-sm p-2 dark:text-gray-200"
             />
           </div>
           <button type="submit" className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200">

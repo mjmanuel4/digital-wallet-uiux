@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 import ProtectedRoute from './routes/ProtectedRoute';
+import PublicRoute from './routes/PublicRoute';
 import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
@@ -17,8 +18,10 @@ function App() {
       <Router>
         <div className="App">
           <Routes>
-            <Route path="/login" element={<Login/>} /> 
-            <Route path="/register" element={<Register />} />
+            <Route element={<PublicRoute />} >
+              <Route path="/login" element={<Login/>} />
+              <Route path="/register" element={<Register />} />
+            </Route>
             <Route element={<ProtectedRoute />} >
               <Route path="/" element={<Navigate to="/dashboard" />} />
               <Route path="/dashboard/*" element={<Dashboard />} />

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 interface ProtectedData {
   email: string;
@@ -15,12 +15,11 @@ interface User {
 
 interface AuthContextType {
   token: string | null;
-  isAuthenticated: boolean | Promise<boolean>;
+  isAuthenticated: boolean | null;
+  loading: boolean | null;
   user: User | null;
   login: (email: string, password: string) => void;
-  loginFetch: (credentials: ProtectedData) => Promise<boolean>;
   logout: () => void;
-  authenticate: () => void;
 }
 
 interface AuthProviderProps {
@@ -31,19 +30,26 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: ({ children }: AuthProviderProps) => React.ReactElement = ({ children }: AuthProviderProps) => {
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | Promise<boolean>>(token != null);
   const [user, setUser] = useState<User | null>(null);
-  
-  console.log('[Auth Provider Startup] token: ', localStorage.getItem('token'));
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>((token !== null) && (token !== 'undefined') ? true : null);
+  const [loading, setLoading] = useState<boolean | null>(null);
+
+  console.log('[Auth Provider Startup] token: ', token);
   console.log('[Auth Provider Startup] authenticated: ', isAuthenticated);
 
 
   const login = (email: string, password: string) => {
     const credentials: ProtectedData = {email, password};
-    setIsAuthenticated(loginFetch(credentials));
+    loginFetch(credentials)
+      .then((result: boolean) => {
+        setIsAuthenticated(result);
+      })
   };
 
   const loginFetch: (credentials: ProtectedData) => Promise<boolean> = async (credentials: ProtectedData) => {
+    let value: boolean = false;
+    setLoading(true);
+
     try {
       const response = await fetch('http://localhost:3000/api/auth/login', {
         method: "POST",
@@ -59,30 +65,26 @@ export const AuthProvider: ({ children }: AuthProviderProps) => React.ReactEleme
       localStorage.setItem('token', result.token);
       setUser(result.user);
 
-      console.log('Authenticated: ', isAuthenticated);
-      console.log('User: ', user);
-
-      return true;
+      value = (result.token != null) ? true : false;
     } catch (e) {
       console.error(e);
-      return false;
+    } finally {
+      setLoading(false);
     }
+
+    return value;
   }
   
   const logout = () => {
     setToken(null);
     localStorage.removeItem('token');
-    setIsAuthenticated(false);
+    setIsAuthenticated(null);
     setUser(null);
     console.log('User logged out');
   };
 
-  const authenticate = () => {
-    setIsAuthenticated(true);
-  }
-
   return (
-    <AuthContext.Provider value={{ token, isAuthenticated, user , login, loginFetch, logout, authenticate }}>
+    <AuthContext.Provider value={{ token, isAuthenticated, loading, user , login, logout}}>
       {children}
     </AuthContext.Provider>
   );

@@ -3,7 +3,7 @@ import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 function Login() {
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const navigate: NavigateFunction = useNavigate();
@@ -12,13 +12,16 @@ function Login() {
     e.preventDefault();
     console.log('Login attempt:', email, password);
     login(email, password);
-    navigate('/dashboard'); // Navigate to dashboard after successful login
+    navigate('/dashboard');
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-6 sm:px-0 dark:bg-slate-900">
       <div className="bg-white dark:bg-slate-800 p-8 rounded shadow-md w-96">
         <h2 className="text-2xl font-bold mb-4 dark:text-white">Login to DigiWallet</h2>
+        <div className={`${(isAuthenticated === false) ? 'flex' : 'hidden'} justify-center`}>
+          <p className="text-center text-red-500 dark:text-red-400">Invalid email or password!</p>
+        </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-zinc-400">Email</label>
