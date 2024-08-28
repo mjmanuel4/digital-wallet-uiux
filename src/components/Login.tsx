@@ -3,7 +3,7 @@ import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 function Login() {
-  const { login, isAuthenticated } = useAuth();
+  const { login, kycStatusFetch, isAuthenticated } = useAuth();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const navigate: NavigateFunction = useNavigate();
@@ -12,7 +12,6 @@ function Login() {
     e.preventDefault();
     console.log('Login attempt:', email, password);
     login(email, password);
-    navigate('/dashboard');
   };
 
   return (

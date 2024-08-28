@@ -25,9 +25,13 @@ interface AuthContextType {
   isAuthenticated: boolean | null;
   loading: boolean | null;
   user: User | null;
+  kycStatus: string | null;
   register: (email: string, paswword: string, firstName: string, lastName: string) => void;
   login: (email: string, password: string) => void;
   logout: () => void;
+  kycStatusFetch: () => void;
+  initiateKycFetch: () => void;
+  createWalletFetch: () => void;
 }
 
 interface AuthProviderProps {
@@ -41,9 +45,10 @@ export const AuthProvider: ({ children }: AuthProviderProps) => React.ReactEleme
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>((token !== null) && (token !== 'undefined') ? true : null);
   const [loading, setLoading] = useState<boolean | null>(null);
+  const [kycStatus, setKycStatus] = useState<string | null>(localStorage.getItem('kycStatus'));
 
-  console.log('[Auth Provider Startup] token: ', token);
-  console.log('[Auth Provider Startup] authenticated: ', isAuthenticated);
+  // console.log('[Auth Provider Startup] token: ', token);
+  // console.log('[Auth Provider Startup] authenticated: ', isAuthenticated);
 
   const register = (email: string, password: string, firstName: string, lastName: string) => {
     const data: RegistrationData = {email, password, firstName, lastName};
@@ -65,13 +70,8 @@ export const AuthProvider: ({ children }: AuthProviderProps) => React.ReactEleme
       })
 
       const result = await response.json();
-
-      if(response.statusText !== 'created') {
-        console.log(result.error);
-      } else {
-        console.log(result.message);
-      }
-
+      
+      console.log(result);
       return result.message;
     } catch (e) {
       console.error(e);
@@ -108,11 +108,82 @@ export const AuthProvider: ({ children }: AuthProviderProps) => React.ReactEleme
       value = (result.token != null) ? true : false;
     } catch (e) {
       console.error(e);
-    } finally {
-      setLoading(false);
     }
 
     return value;
+  }
+
+  const kycStatusFetch: () => void = async () => {
+    // console.log('[KYC Status Fetch] ', token);
+
+    try {
+      const response = await fetch('http://localhost:3000/api/kyc/status', {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      })
+
+      const result = await response.json();
+
+      localStorage.setItem('kycStatus', result.status);
+      setKycStatus(result.status);
+      console.log('[KYC Status Fetch] result: ', result);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const initiateKycFetch: () => void = async () => {
+    console.log('[Initiate KYC Fetch] KYC status: ', localStorage.getItem('kycStatus'));
+    setLoading(true);
+
+    try {
+      const response = await fetch('http://localhost:3000/api/kyc/initiate', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      })
+
+      const result = await response.json();
+
+      localStorage.setItem('kycStatus', result.status);
+      setKycStatus(result.status);
+      console.log('[KYC Status Fetch] ', result.status);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  const createWalletFetch: () => void = async () => {
+    console.log('[Create Wallet Fetch] KYC status: ', localStorage.getItem('kycStatus'));
+
+    try {
+      const response = await fetch('http://localhost:3000/api/wallet/create', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({"initialBalance": 1000}),
+      })
+
+      const result = await response.json();
+
+      if (response.ok)
+        console.log('[Create Wallet Fetch] wallet created');
+      else
+        console.log('[Create Wallet Fetch] error: ', result);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
   }
   
   const logout = () => {
@@ -120,11 +191,13 @@ export const AuthProvider: ({ children }: AuthProviderProps) => React.ReactEleme
     localStorage.removeItem('token');
     setIsAuthenticated(null);
     setUser(null);
+    setKycStatus(null);
+    localStorage.removeItem('kycStatus');
     console.log('User logged out');
   };
 
   return (
-    <AuthContext.Provider value={{ token, isAuthenticated, loading, user , register, login, logout}}>
+    <AuthContext.Provider value={{ token, isAuthenticated, loading, user, kycStatus , register, login, logout, kycStatusFetch, initiateKycFetch, createWalletFetch}}>
       {children}
     </AuthContext.Provider>
   );

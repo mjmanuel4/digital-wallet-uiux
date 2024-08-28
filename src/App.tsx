@@ -7,6 +7,8 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import PublicRoute from './routes/PublicRoute';
 import { AuthProvider } from './contexts/AuthContext';
 
+import InitiateKYC from './components/InitiateKYC';
+
 function App() {
   useEffect(() => {
     if (localStorage.getItem('theme') === 'dark')
